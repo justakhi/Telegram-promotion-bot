@@ -85,6 +85,12 @@ def register_channels(bot, update):
     return CHANNEL_REGISTER
 
 def channel_checker(bot, update):
+    def channelexistence(username):
+        try:
+            bot.getChat(username)
+            return True
+        except BadRequest:
+            return False               
     # bot.delete_message(chat_id=633454130, message_id=update.message.reply_to_message.message_id)
     keyboard = [[InlineKeyboardButton("Done✅", callback_data = 'done')]]
     reply_markup = InlineKeyboardMarkup(keyboard)
