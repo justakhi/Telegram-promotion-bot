@@ -48,7 +48,7 @@ def start(bot, update):
 def my_channels(bot, update):
     # Google Sheets
     scope = ["https://spreadsheets.google.com/feeds", "https://www.googleapis.com/auth/drive"]
-    credentials = ServiceAccountCredentials.from_json_keyfile_name("E:\\projects\\instagrambot\\test.json", scope)
+    credentials = ServiceAccountCredentials.from_json_keyfile_name("test.json", scope)
     gc = gspread.authorize(credentials)
     wks = gc.open("Group Promote").sheet1
     chat_ids = wks.col_values(3)
@@ -80,7 +80,7 @@ def channel_checker(bot, update):
     username = (update.message.text).replace("@", "")
     # Google Sheets
     scope = ["https://spreadsheets.google.com/feeds", "https://www.googleapis.com/auth/drive"]
-    credentials = ServiceAccountCredentials.from_json_keyfile_name("E:\\projects\\instagrambot\\test.json", scope)
+    credentials = ServiceAccountCredentials.from_json_keyfile_name("test.json", scope)
     gc = gspread.authorize(credentials)
     wks = gc.open("Group Promote").sheet1
 
@@ -106,7 +106,7 @@ def done(bot, update):
     if dope.can_post_messages == True and dope.can_edit_messages == True and dope.can_delete_messages == True:
         # Google Sheets
         scope = ["https://spreadsheets.google.com/feeds", "https://www.googleapis.com/auth/drive"]
-        credentials = ServiceAccountCredentials.from_json_keyfile_name("E:\\projects\\instagrambot\\test.json", scope)
+        credentials = ServiceAccountCredentials.from_json_keyfile_name("test.json", scope)
         gc = gspread.authorize(credentials)
         wks = gc.open("Group Promote").sheet1
         lenght = len(wks.col_values(1)) + 1
@@ -152,7 +152,7 @@ def add(bot, update):
 
         # Google Sheets
         scope = ["https://spreadsheets.google.com/feeds", "https://www.googleapis.com/auth/drive"]
-        credentials = ServiceAccountCredentials.from_json_keyfile_name("E:\\projects\\instagrambot\\test.json", scope)
+        credentials = ServiceAccountCredentials.from_json_keyfile_name("test.json", scope)
         gc = gspread.authorize(credentials)
         wks = gc.open("Group Promote").get_worksheet(1)
 
