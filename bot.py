@@ -123,9 +123,8 @@ def group(bot, update):
     return ConversationHandler.END
 
 def help(bot, update):
-    print(bot.getChat(f"@adasdfgdshscf"))
     bot.send_message(chat_id=update.message.chat.id, text = "Help")
-    return ConversationHandler.END
+    # return ConversationHandler.END
 
 def cancel(bot, update):
     bot.send_message(update.message.chat_id, "Bye!")
