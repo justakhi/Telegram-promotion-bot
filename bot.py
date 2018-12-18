@@ -13,6 +13,7 @@ import lxml
 import re
 import json
 
+
 class AddCommand(BaseFilter):
     def filter(self, message):
         return '!add' in message.text # or '!Add' in message.text or '!ADD' in message.text
@@ -47,38 +48,31 @@ def start(bot, update):
 
 def my_channels(bot, update):
     # Google Sheets
-    print("cool")
-    scope = ["https://spreadsheets.google.com/feeds", "https://www.googleapis.com/auth/drive"]
-    print("cool")               
-    credentials = ServiceAccountCredentials.from_json_keyfile_name("test.json", scope)
-    print("cool")               
-    gc = gspread.authorize(credentials)
-    print("cool")               
-    wks = gc.open("Group Promote").sheet1
-    print("cool")               
-    chat_ids = wks.col_values(3)
-    print("cool")               
+
+    scope = ["https://spreadsheets.google.com/feeds", "https://www.googleapis.com/auth/drive"]            
+    credentials = ServiceAccountCredentials.from_json_keyfile_name("test.json", scope)              
+    gc = gspread.authorize(credentials)               
+    wks = gc.open("Group Promote").sheet1               
+    chat_ids = wks.col_values(3)              
     records = wks.get_all_values()
-    print("cool")               
+               
 
     channel_list = []
-    print("cool")               
+               
     if str(update.message.chat.id) in chat_ids:
         while str(update.message.chat.id) in chat_ids:
-            ddd = chat_ids.index(str(update.message.chat.id))
-            print("cool")               
-            channel_list.append(records[ddd][0])
-            print("cool")               
+            ddd = chat_ids.index(str(update.message.chat.id))                    
+            channel_list.append(records[ddd][0])                 
             chat_ids.pop(ddd)
             records.pop(ddd)
-            print("cool")               
+                      
         print(channel_list)
         bot.send_message(chat_id=update.message.chat.id, text=((f"{channel_list}".replace("[","")).replace("]","")).replace("'",""), timeout=30)
         channel_list.clear()
-        print("cool")               
+        return ConversationHandler.END           
     else:
         update.message.reply_text("You have no Channels registered", timeout=30)
-        print("cool")               
+        return ConversationHandler.END           
 
 def register_channels(bot, update):
     bot.send_message(chat_id=update.message.chat.id, text="Please send Your Channel's @username", reply_markup=ForceReply(), timeout=30)
@@ -94,7 +88,7 @@ def channel_checker(bot, update):
     # bot.delete_message(chat_id=633454130, message_id=update.message.reply_to_message.message_id)
     keyboard = [[InlineKeyboardButton("Done✅", callback_data = 'done')]]
     reply_markup = InlineKeyboardMarkup(keyboard)
-    global text
+    global username
     username = (update.message.text).replace("@", "")
     # Google Sheets
     scope = ["https://spreadsheets.google.com/feeds", "https://www.googleapis.com/auth/drive"]
@@ -117,10 +111,10 @@ def channel_checker(bot, update):
 def done(bot, update):
     query = update.callback_query
     print(query)
-    channel_username = f"@{text}"
+    channel_username = f"@{username}"
     dope = bot.getChatMember(channel_username, 633454130)
     print(dope)
-    chat_info = bot.getChat(f"@{text}")
+    chat_info = bot.getChat(f"@{username}")
     if dope.can_post_messages == True and dope.can_edit_messages == True and dope.can_delete_messages == True:
         # Google Sheets
         scope = ["https://spreadsheets.google.com/feeds", "https://www.googleapis.com/auth/drive"]
@@ -133,8 +127,10 @@ def done(bot, update):
         wks.update_cell(lenght, 3, query.message.chat.id)
         wks.update_cell(lenght, 4, query.message.chat.username)
         bot.send_message(chat_id=query.message.chat.id, text="verified", timeout=50)
-    else: bot.send_message(chat_id=query.message.chat.id, text="verification falied", timeout=10)
-    return ConversationHandler.END
+        return ConversationHandler.END
+    else: 
+        bot.send_message(chat_id=query.message.chat.id, text="verification falied", timeout=10)
+        return ConversationHandler.END
 
 def group(bot, update):
     bot.send_message(chat_id=update.message.chat.id, text = "Group name")
