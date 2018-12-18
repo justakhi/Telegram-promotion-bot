@@ -47,28 +47,41 @@ def start(bot, update):
 
 def my_channels(bot, update):
     # Google Sheets
+    print("cool")
     scope = ["https://spreadsheets.google.com/feeds", "https://www.googleapis.com/auth/drive"]
+    print("cool")               
     credentials = ServiceAccountCredentials.from_json_keyfile_name("test.json", scope)
+    print("cool")               
     gc = gspread.authorize(credentials)
+    print("cool")               
     wks = gc.open("Group Promote").sheet1
+    print("cool")               
     chat_ids = wks.col_values(3)
+    print("cool")               
     records = wks.get_all_values()
+    print("cool")               
     try:               
         ddd = chat_ids.index(str(update.message.chat.id))
     except ValueError: return None
 
     channel_list = []
+    print("cool")               
     if str(update.message.chat.id) in chat_ids:
         while str(update.message.chat.id) in chat_ids:
             ddd = chat_ids.index(str(update.message.chat.id))
+            print("cool")               
             channel_list.append(records[ddd][0])
+            print("cool")               
             chat_ids.pop(ddd)
             records.pop(ddd)
+            print("cool")               
         print(channel_list)
         bot.send_message(chat_id=update.message.chat.id, text=((f"{channel_list}".replace("[","")).replace("]","")).replace("'",""), timeout=30)
         channel_list.clear()
+        print("cool")               
     else:
         update.message.reply_text("You have no Channels registered", timeout=30)
+        print("cool")               
 
 def register_channels(bot, update):
     bot.send_message(chat_id=update.message.chat.id, text="Please send Your Channel's @username", reply_markup=ForceReply(), timeout=30)
