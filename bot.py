@@ -119,12 +119,12 @@ def done(bot, update):
     return ConversationHandler.END
 
 def group(bot, update):
-    update.message.reply_text("Group name")
+    bot.send_message(chat_id=query.message.chat.id, "Group name")
     return ConversationHandler.END
 
 def help(bot, update):
     print(bot.getChat(f"@adasdfgdshscf"))
-    update.message.reply_text("Help")
+    bot.send_message(chat_id=query.message.chat.id, "Help")
     return ConversationHandler.END
 
 def cancel(bot, update):
