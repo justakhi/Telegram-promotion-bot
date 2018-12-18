@@ -200,8 +200,8 @@ def main():
 
         states = {
             CHOOSING:  [
-                        RegexHandler('^({})$'.format(f'Register New Channel {emojize(":black_nib:", use_aliases=True)}'), my_channels),
-                        RegexHandler('^({})$'.format(f'My Channels {emojize(":clipboard:", use_aliases=True)}'), register_channels),
+                        RegexHandler('^({})$'.format(f'Register New Channel {emojize(":black_nib:", use_aliases=True)}'), register_channels),
+                        RegexHandler('^({})$'.format(f'My Channels {emojize(":clipboard:", use_aliases=True)}'), my_channels),
                         RegexHandler('^({})$'.format(f'Group {emojize(":loudspeaker:", use_aliases=True)}'), group),
                         RegexHandler('^({})$'.format(f'Help {emojize(":grey_question:", use_aliases=True)}'), help)
                         ],
