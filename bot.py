@@ -54,7 +54,7 @@ def my_channels(bot, update):
     chat_ids = wks.col_values(3)
     records = wks.get_all_values()
     try:               
-        ddd = chat_ids.find(str(update.message.chat.id))
+        ddd = chat_ids.index(str(update.message.chat.id))
     except ValueError: return None
 
     channel_list = []
