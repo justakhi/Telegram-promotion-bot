@@ -41,7 +41,7 @@ markup = ReplyKeyboardMarkup(reply_keyboard, one_time_keyboard=True)
 def start(bot, update):
     print(update)
     bot.send_message(chat_id=update.message.chat.id,
-        text=f"Hi there {update.message.chat.first_name} {emojize(':wave:', use_aliases=True)}\nUse the bot to Contact for advertising & Register your channel for GeekHub Ads services\nADMINS:-",
+        text=f"Hi there {update.message.chat.first_name} {emojize(':wave:', use_aliases=True)}\nUse the bot to Contact for advertising & Register your channel for COMPANY services\nADMINS:-",
         reply_markup=markup)
     return CHOOSING
 
@@ -53,7 +53,9 @@ def my_channels(bot, update):
     wks = gc.open("Group Promote").sheet1
     chat_ids = wks.col_values(3)
     records = wks.get_all_values()
-    ddd = chat_ids.index(str(update.message.chat.id))
+    try:               
+        ddd = chat_ids.find(str(update.message.chat.id))
+    except ValueError: return None
 
     channel_list = []
     if str(update.message.chat.id) in chat_ids:
