@@ -60,9 +60,6 @@ def my_channels(bot, update):
     print("cool")               
     records = wks.get_all_values()
     print("cool")               
-    try:               
-        ddd = chat_ids.index(str(update.message.chat.id))
-    except ValueError: return None
 
     channel_list = []
     print("cool")               
