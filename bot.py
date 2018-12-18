@@ -42,7 +42,7 @@ def start(bot, update):
     print(update)
     bot.send_message(chat_id=update.message.chat.id,
         text=f"Hi there {update.message.chat.first_name} {emojize(':wave:', use_aliases=True)}\nUse the bot to Contact for advertising & Register your channel for GeekHub Ads services\nADMINS:-",
-        reply_markup=markup, timeout=30)
+        reply_markup=markup)
     return CHOOSING
 
 def my_channels(bot, update):
@@ -218,7 +218,7 @@ def main():
     dp.add_handler(my_channels_handler)
     dp.add_handler(add_command_handler)
     dp.add_handler(conv_handler)
-    dp.add_error_handler(error) # log all errors
+    # dp.add_error_handler(error) # log all errors
 
     # Start the Bot
     updater.start_polling()
