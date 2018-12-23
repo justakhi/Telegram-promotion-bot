@@ -25,6 +25,7 @@ class AddCommand(BaseFilter):
 addcommand = AddCommand()
 
 TOKEN = os.environ.get('TOKEN', None) # get token from command-line
+PORT = int(os.environ.get('PORT', '8443'))
 
 # Enable logging
 logging.basicConfig(format='%(asctime)s - %(name)s - %(levelname)s - %(message)s',
@@ -309,7 +310,9 @@ def main():
     job.run_daily(list_maker, time=timer('18:30:00'), days=(0,1,2,3,4,5,6))
 
     # Start the Bot
-    updater.start_polling()
+    updater.start_webhook(listen="0.0.0.0", port=PORT, url_path=TOKEN)
+                   
+    updater.bot.set_webhook("https://telegram-promotion-bot.herokuapp.com/" + TOKEN)                    
 
     # Run the bot until you press Ctrl-C or the process receives SIGINT,
     # SIGTERM or SIGABRT. This should be used most of the time, since
