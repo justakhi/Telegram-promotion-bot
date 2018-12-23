@@ -43,16 +43,15 @@ reply_keyboard = [
 markup = ReplyKeyboardMarkup(reply_keyboard, one_time_keyboard=True)
 
 
-def grouper(inputs:list, n:int, fillvalue:str='') -> tuple:
-    def grouper(inputs:list, n:int, fillvalue:str='', extrasremover = True) -> List:
-        iters = [iter(inputs)] * n
-        grouped = [list(i) for i in it.zip_longest(*iters, fillvalue=fillvalue)]
+def grouper(inputs:list, n:int, fillvalue:str='', extrasremover = True) -> List:
+    iters = [iter(inputs)] * n
+    grouped = [list(i) for i in it.zip_longest(*iters, fillvalue=fillvalue)]
 
-        if extrasremover and "" in grouped[-1] and len(grouped) > 0:
-             while "" in grouped[-1]:
-                 grouped[-1].remove("")
+    if extrasremover and "" in grouped[-1] and len(grouped) > 0:
+         while "" in grouped[-1]:
+             grouped[-1].remove("")
 
-        return grouped
+    return grouped
 
 def timer(n):
     return datetime.strptime(n,'%H:%M:%S').time()
