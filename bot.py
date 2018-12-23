@@ -25,7 +25,7 @@ class AddCommand(BaseFilter):
 addcommand = AddCommand()
 
 TOKEN = os.environ.get('TOKEN', None) # get token from command-line
-PORT = int(os.environ.get('PORT', '8443'))
+PORT = int(os.environ.get('PORT', '8080
 
 # Enable logging
 logging.basicConfig(format='%(asctime)s - %(name)s - %(levelname)s - %(message)s',
