@@ -43,7 +43,7 @@ reply_keyboard = [
 markup = ReplyKeyboardMarkup(reply_keyboard, one_time_keyboard=True)
 
 
-def grouper(inputs:list, n:int, fillvalue:str='', extrasremover = True) -> List:
+def grouper(inputs:list, n:int, fillvalue:str='', extrasremover = True):
     iters = [iter(inputs)] * n
     grouped = [list(i) for i in it.zip_longest(*iters, fillvalue=fillvalue)]
 
@@ -309,9 +309,7 @@ def main():
     job.run_daily(list_maker, time=timer('18:30:00'), days=(0,1,2,3,4,5,6))
 
     # Start the Bot
-    updater.start_webhook(listen="0.0.0.0", port=PORT, url_path=TOKEN)
-                   
-    updater.bot.set_webhook("https://telegram-promotion-bot.herokuapp.com/" + TOKEN)                    
+    updater.start_polling()                 
 
     # Run the bot until you press Ctrl-C or the process receives SIGINT,
     # SIGTERM or SIGABRT. This should be used most of the time, since
