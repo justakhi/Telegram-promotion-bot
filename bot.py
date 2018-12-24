@@ -13,8 +13,8 @@ import logging
 import gspread
 import lxml
 import json
-import os
 import re
+
 
 
 class AddCommand(BaseFilter):
@@ -24,8 +24,7 @@ class AddCommand(BaseFilter):
 
 addcommand = AddCommand()
 
-TOKEN = os.environ.get('TOKEN', None) # get token from command-line
-PORT = int(os.environ.get('PORT', '8080')
+TOKEN = "633454130:AAFELNbB1sjps4MyaOIbOFvwOathh6cWDgE"
 
 # Enable logging
 logging.basicConfig(format='%(asctime)s - %(name)s - %(levelname)s - %(message)s',
@@ -43,7 +42,7 @@ reply_keyboard = [
 markup = ReplyKeyboardMarkup(reply_keyboard, one_time_keyboard=True)
 
 
-def grouper(inputs:list, n:int, fillvalue:str='', extrasremover = True):
+def grouper(inputs:list, n:int, fillvalue:str='', extrasremover = True) -> List:
     iters = [iter(inputs)] * n
     grouped = [list(i) for i in it.zip_longest(*iters, fillvalue=fillvalue)]
 
@@ -277,7 +276,7 @@ def main():
 
     # Get the dispatcher to register handlers
     dp = updater.dispatcher
-    job = dp.job_queue
+    job = dispatcher.job_queue
 
     conv_handler = ConversationHandler(
         entry_points = [CommandHandler('start', start)],
@@ -309,7 +308,7 @@ def main():
     job.run_daily(list_maker, time=timer('18:30:00'), days=(0,1,2,3,4,5,6))
 
     # Start the Bot
-    updater.start_polling()                 
+    updater.start_polling()
 
     # Run the bot until you press Ctrl-C or the process receives SIGINT,
     # SIGTERM or SIGABRT. This should be used most of the time, since
