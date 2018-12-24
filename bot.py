@@ -5,6 +5,7 @@ from oauth2client.service_account import ServiceAccountCredentials
 from gspread.exceptions import CellNotFound
 from datetime import datetime, timedelta
 from bs4 import BeautifulSoup
+from typing import List
 from emoji import emojize
 import itertools as it
 import telegram
