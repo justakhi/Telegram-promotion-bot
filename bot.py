@@ -250,7 +250,7 @@ def add(bot, update):
     elif message.count(",") != 1 or "@" not in message:
         bot.send_message(chat_id=GROUPCHATID ,text="Format is not correct", reply_to_message_id=msg_id, disable_notification=True)
 
-def list_maker():
+def list_maker(bot, update):
     # Google sheets for Storing the Chat ID of every new Telegram user who press start
     scope = ["https://spreadsheets.google.com/feeds", "https://www.googleapis.com/auth/drive"]
     credentials = ServiceAccountCredentials.from_json_keyfile_name(r"test.json", scope)
