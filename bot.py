@@ -278,7 +278,7 @@ def list_maker(bot, update):
                 n =  n + 1
 
     row_len = len(wks.get_all_values())
-    wk.values_clear(f'Sheet3!A2:J{row_len}')
+    wk.values_clear(f'Sheet2!A2:J{row_len}')
     send_message(chat_id=518999273, text="List Updated", timeout=100)
 
 def main():
