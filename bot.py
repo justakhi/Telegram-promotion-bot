@@ -314,7 +314,7 @@ def main():
     dp.add_handler(my_channels_handler)
     dp.add_handler(add_command_handler)
     dp.add_handler(conv_handler)
-    dp.add_handler(test_command_handler)
+    # dp.add_handler(test_command_handler)
     dp.add_error_handler(error) # log all errors
 
     # Job Queue
