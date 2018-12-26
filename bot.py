@@ -274,12 +274,12 @@ def list_maker(bot, update):
                 dope = ['\n\n@' + '\n📲'.join(pair) for pair in zip(usernamecollist[n], descriptioncollist[n])]
                 column = ''.join(a for a in dope)
                 for i in usernamecollist[n]:
-                    send_message(chat_id=f"@{i}", text=column, timeout=100)
+                    bot.send_message(chat_id=f"@{i}", text=column, timeout=100)
                 n =  n + 1
 
     row_len = len(wks.get_all_values())
     wk.values_clear(f'Sheet2!A2:J{row_len}')
-    send_message(chat_id=518999273, text="List Updated", timeout=100)
+    bot.send_message(chat_id=518999273, text="List Updated", timeout=100)
 
 def main():
     # Create the Updater and pass it your bot's token.
