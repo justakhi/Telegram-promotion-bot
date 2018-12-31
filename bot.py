@@ -24,8 +24,8 @@ class AddCommand(BaseFilter):
 
 addcommand = AddCommand()
 
-TOKEN = os.environ.get('TOKEN', None)
-GROUPCHATID = os.environ.get('GROUPCHATID', None)
+TOKEN = "633454130:AAFELNbB1sjps4MyaOIbOFvwOathh6cWDgE" # os.environ.get('TOKEN', None)
+GROUPCHATID =-1001425258935 # os.environ.get('GROUPCHATID', None)
 
 # Enable logging
 logging.basicConfig(format='%(asctime)s - %(name)s - %(levelname)s - %(message)s',
@@ -186,9 +186,9 @@ def add(bot, update):
     print(update)
 
     def col_update(col):
-        lenght = len(wks.col_values(col)) + 1
-        wks.update_cell(lenght, col - 1, f"{username}")
-        wks.update_cell(lenght, col, f"{description}")
+        lenght = len(wks2.col_values(col)) + 1
+        wks2.update_cell(lenght, col - 1, f"{username}")
+        wks2.update_cell(lenght, col, f"{description}")
 
     def channelexistence(username):
         try:
@@ -201,23 +201,26 @@ def add(bot, update):
     scope = ["https://spreadsheets.google.com/feeds", "https://www.googleapis.com/auth/drive"]
     credentials = ServiceAccountCredentials.from_json_keyfile_name(r"test.json", scope)
     gc = gspread.authorize(credentials)
-    wks1 = gc.open("Group Promote").get_worksheet(0)
+    wks = gc.open("Group Promote")
+    wks1 = wks.get_worksheet(0)
+    wks2 = wks.get_worksheet(1)
     registered_channels = str(wks1.get_all_records())
     msg_id = update.message.message_id
     message = update.message.text
-    print(update.message.from.id)
+    print(update.message.from_user)
+    print(update.message.from_user.id)
     if message.count(",") == 1 and "@" in message:
         username = message[message.find("@") + 1:message.find(",")]
         description = message[message.find(",") + 1::]
 
-        if str(update.message.from.id) in registered_channels and username in registered_channels:
+        if str(update.message.from_user.id) in registered_channels and username in registered_channels:
             wks2 = gc.open("Group Promote").get_worksheet(1)
 
             if len(description.split()) > 10:
                 bot.send_message(chat_id=GROUPCHATID ,text="We don't accept description morethan 10 words", reply_to_message_id=msg_id, disable_notification=True, timeout=50)
             elif not (channelexistence(f"@{username}")):
                 bot.send_message(chat_id=GROUPCHATID ,text="this channel doesn't exits", reply_to_message_id=msg_id, disable_notification=True, timeout=50)
-            elif username in str(wks.get_all_values()):
+            elif username in str(wks2.get_all_values()):
                 bot.send_message(chat_id=GROUPCHATID ,text="This channel is already in today's List", reply_to_message_id=msg_id, disable_notification=True, timeout=50)
             else:
                 req = requests.get(f"https://t.me/{username}")
@@ -241,9 +244,9 @@ def add(bot, update):
                     col_update(10)
                     bot.send_message(chat_id=GROUPCHATID ,text="You are been added to 200000 and more List", reply_to_message_id=msg_id, disable_notification=True, timeout=50)
 
-        elif str(update.message.from.id) in registered_channels and username not in registered_channels:
+        elif str(update.message.from_user.id) in registered_channels and username not in registered_channels:
             bot.send_message(chat_id=GROUPCHATID ,text=f"You need to register @{username} channel in @registeringbot", reply_to_message_id=msg_id, disable_notification=True, timeout=50)
-        elif str(update.message.from.id) not in registered_channels and username in registered_channels:
+        elif str(update.message.from_user.id) not in registered_channels and username in registered_channels:
             bot.send_message(chat_id=GROUPCHATID ,text=f"You haven't registered this @{username} channel under your name in @registeringbot", reply_to_message_id=msg_id, disable_notification=True, timeout=50)
         else: bot.send_message(chat_id=GROUPCHATID ,text=f"You haven't registered in @registeringbot", reply_to_message_id=msg_id, disable_notification=True, timeout=50)
 
@@ -280,7 +283,7 @@ def list_maker(bot, update):
     row_len = len(wks.get_all_values())
     # wk.values_clear(f'Sheet2!A2:J{row_len}')
     bot.send_message(chat_id=518999273, text="List Updated", timeout=100)
-    print("cool")               
+    print("cool")
 
 def main():
     # Create the Updater and pass it your bot's token.
@@ -310,7 +313,7 @@ def main():
     my_channels_handler = CommandHandler("channels", my_channels)
     add_command_handler = MessageHandler(addcommand, add)
     test_command_handler = CommandHandler("test", list_maker)
-    
+
     dp.add_handler(help_handler)
     dp.add_handler(my_channels_handler)
     dp.add_handler(add_command_handler)
