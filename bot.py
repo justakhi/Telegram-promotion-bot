@@ -210,7 +210,7 @@ def add(bot, update):
         username = message[message.find("@") + 1:message.find(",")]
         description = message[message.find(",") + 1::]
 
-        if str(update.message.chat.id) in registered_channels and username in registered_channels:
+        if str(update.message.from.id) in registered_channels and username in registered_channels:
             wks2 = gc.open("Group Promote").get_worksheet(1)
 
             if len(description.split()) > 10:
@@ -241,9 +241,9 @@ def add(bot, update):
                     col_update(10)
                     bot.send_message(chat_id=GROUPCHATID ,text="You are been added to 200000 and more List", reply_to_message_id=msg_id, disable_notification=True, timeout=50)
 
-        elif str(update.message.chat.id) in registered_channels and username not in registered_channels:
+        elif str(update.message.from.id) in registered_channels and username not in registered_channels:
             bot.send_message(chat_id=GROUPCHATID ,text=f"You need to register @{username} channel in @registeringbot", reply_to_message_id=msg_id, disable_notification=True, timeout=50)
-        elif str(update.message.chat.id) not in registered_channels and username in registered_channels:
+        elif str(update.message.from.id) not in registered_channels and username in registered_channels:
             bot.send_message(chat_id=GROUPCHATID ,text=f"You haven't registered this @{username} channel under your name in @registeringbot", reply_to_message_id=msg_id, disable_notification=True, timeout=50)
         else: bot.send_message(chat_id=GROUPCHATID ,text=f"You haven't registered in @registeringbot", reply_to_message_id=msg_id, disable_notification=True, timeout=50)
 
