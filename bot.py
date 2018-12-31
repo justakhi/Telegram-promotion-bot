@@ -278,8 +278,9 @@ def list_maker(bot, update):
                 n =  n + 1
 
     row_len = len(wks.get_all_values())
-    wk.values_clear(f'Sheet2!A2:J{row_len}')
+    # wk.values_clear(f'Sheet2!A2:J{row_len}')
     bot.send_message(chat_id=518999273, text="List Updated", timeout=100)
+    print("cool")               
 
 def main():
     # Create the Updater and pass it your bot's token.
@@ -309,16 +310,16 @@ def main():
     my_channels_handler = CommandHandler("channels", my_channels)
     add_command_handler = MessageHandler(addcommand, add)
     test_command_handler = CommandHandler("test", list_maker)
-
+    
     dp.add_handler(help_handler)
     dp.add_handler(my_channels_handler)
     dp.add_handler(add_command_handler)
     dp.add_handler(conv_handler)
-    # dp.add_handler(test_command_handler)
+    dp.add_handler(test_command_handler)
     dp.add_error_handler(error) # log all errors
 
     # Job Queue
-    job.run_daily(list_maker, time=timer('18:30:00'), days=(0,1,2,3,4,5,6))
+    # job.run_daily(list_maker, time=timer('18:30:00'), days=(0,1,2,3,4,5,6))
 
     # Start the Bot
     updater.start_polling()
