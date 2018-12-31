@@ -205,7 +205,7 @@ def add(bot, update):
     registered_channels = str(wks1.get_all_records())
     msg_id = update.message.message_id
     message = update.message.text
-
+    print(update.message.from.id)
     if message.count(",") == 1 and "@" in message:
         username = message[message.find("@") + 1:message.find(",")]
         description = message[message.find(",") + 1::]
