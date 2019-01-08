@@ -197,61 +197,62 @@ def add(bot, update):
         except BadRequest:
             return False
 
-    # Google Sheets
-    scope = ["https://spreadsheets.google.com/feeds", "https://www.googleapis.com/auth/drive"]
-    credentials = ServiceAccountCredentials.from_json_keyfile_name(r"test.json", scope)
-    gc = gspread.authorize(credentials)
-    wks = gc.open("Group Promote")
-    wks1 = wks.get_worksheet(0)
-    wks2 = wks.get_worksheet(1)
-    registered_channels = str(wks1.get_all_records())
-    msg_id = update.message.message_id
-    message = update.message.text
-    print(update.message.from_user)
-    print(update.message.from_user.id)
-    if message.count(",") == 1 and "@" in message:
-        username = message[message.find("@") + 1:message.find(",")]
-        description = message[message.find(",") + 1::]
+    if datetime.today().weekday() == 1:
+        # Google Sheets
+        scope = ["https://spreadsheets.google.com/feeds", "https://www.googleapis.com/auth/drive"]
+        credentials = ServiceAccountCredentials.from_json_keyfile_name(r"test.json", scope)
+        gc = gspread.authorize(credentials)
+        wks = gc.open("Group Promote")
+        wks1 = wks.get_worksheet(0)
+        wks2 = wks.get_worksheet(1)
+        registered_channels = str(wks1.get_all_records())
+        msg_id = update.message.message_id
+        message = update.message.text
+        if message.count(",") == 1 and "@" in message:
+            username = message[message.find("@") + 1:message.find(",")]
+            description = message[message.find(",") + 1::]
 
-        if str(update.message.from_user.id) in registered_channels and username in registered_channels:
-            wks2 = gc.open("Group Promote").get_worksheet(1)
+            if str(update.message.from_user.id) in registered_channels and username.lower() in registered_channels:
+                wks2 = gc.open("Group Promote").get_worksheet(1)
 
-            if len(description.split()) > 10:
-                bot.send_message(chat_id=GROUPCHATID ,text="We don't accept description morethan 10 words", reply_to_message_id=msg_id, disable_notification=True, timeout=50)
-            elif not (channelexistence(f"@{username}")):
-                bot.send_message(chat_id=GROUPCHATID ,text="this channel doesn't exits", reply_to_message_id=msg_id, disable_notification=True, timeout=50)
-            elif username in str(wks2.get_all_values()):
-                bot.send_message(chat_id=GROUPCHATID ,text="This channel is already in today's List", reply_to_message_id=msg_id, disable_notification=True, timeout=50)
-            else:
-                req = requests.get(f"https://t.me/{username}")
-                soup = BeautifulSoup(req.content, "lxml")
-                member = soup.find("div", "tgme_page_extra").text
-                member = int(re.sub('[a-zA-Z\s]', '', member))
+                if len(description.split()) > 10:
+                    bot.send_message(chat_id=GROUPCHATID ,text="We don't accept description morethan 10 words", reply_to_message_id=msg_id, disable_notification=True, timeout=50)
+                elif not (channelexistence(f"@{username}")):
+                    bot.send_message(chat_id=GROUPCHATID ,text="this channel doesn't exits", reply_to_message_id=msg_id, disable_notification=True, timeout=50)
+                elif username in str(wks2.get_all_values()):
+                    bot.send_message(chat_id=GROUPCHATID ,text="This channel is already in today's List", reply_to_message_id=msg_id, disable_notification=True, timeout=50)
+                else:
+                    req = requests.get(f"https://t.me/{username}")
+                    soup = BeautifulSoup(req.content, "lxml")
+                    member = soup.find("div", "tgme_page_extra").text
+                    member = int(re.sub('[a-zA-Z\s]', '', member))
 
-                if member >= 0 and member <= 999:
-                    col_update(2)
-                    bot.send_message(chat_id=GROUPCHATID ,text="You are been added to 0 to 999 List", reply_to_message_id=msg_id, disable_notification=True, timeout=50)
-                elif member >= 1000 and member <= 9999:
-                    col_update(4)
-                    bot.send_message(chat_id=GROUPCHATID ,text="You are been added to 1000 to 9999 List", reply_to_message_id=msg_id, disable_notification=True, timeout=50)
-                elif member >= 10000 and member <= 49999:
-                    col_update(6)
-                    bot.send_message(chat_id=GROUPCHATID ,text="You are been added to 10000 to 49999 List", reply_to_message_id=msg_id, disable_notification=True, timeout=50)
-                elif member >= 50000 and member <= 199999:
-                    col_update(8)
-                    bot.send_message(chat_id=GROUPCHATID ,text="You are been added to 50000 to 199999 List", reply_to_message_id=msg_id, disable_notification=True, timeout=50)
-                elif member >= 200000:
-                    col_update(10)
-                    bot.send_message(chat_id=GROUPCHATID ,text="You are been added to 200000 and more List", reply_to_message_id=msg_id, disable_notification=True, timeout=50)
+                    if member >= 0 and member <= 999:
+                        col_update(2)
+                        bot.send_message(chat_id=GROUPCHATID ,text="You are been added to 0 to 999 List", reply_to_message_id=msg_id, disable_notification=True, timeout=50)
+                    elif member >= 1000 and member <= 9999:
+                        col_update(4)
+                        bot.send_message(chat_id=GROUPCHATID ,text="You are been added to 1000 to 9999 List", reply_to_message_id=msg_id, disable_notification=True, timeout=50)
+                    elif member >= 10000 and member <= 49999:
+                        col_update(6)
+                        bot.send_message(chat_id=GROUPCHATID ,text="You are been added to 10000 to 49999 List", reply_to_message_id=msg_id, disable_notification=True, timeout=50)
+                    elif member >= 50000 and member <= 199999:
+                        col_update(8)
+                        bot.send_message(chat_id=GROUPCHATID ,text="You are been added to 50000 to 199999 List", reply_to_message_id=msg_id, disable_notification=True, timeout=50)
+                    elif member >= 200000:
+                        col_update(10)
+                        bot.send_message(chat_id=GROUPCHATID ,text="You are been added to 200000 and more List", reply_to_message_id=msg_id, disable_notification=True, timeout=50)
 
-        elif str(update.message.from_user.id) in registered_channels and username not in registered_channels:
-            bot.send_message(chat_id=GROUPCHATID ,text=f"You need to register @{username} channel in @registeringbot", reply_to_message_id=msg_id, disable_notification=True, timeout=50)
-        elif str(update.message.from_user.id) not in registered_channels and username in registered_channels:
-            bot.send_message(chat_id=GROUPCHATID ,text=f"You haven't registered this @{username} channel under your name in @registeringbot", reply_to_message_id=msg_id, disable_notification=True, timeout=50)
-        else: bot.send_message(chat_id=GROUPCHATID ,text=f"You haven't registered in @registeringbot", reply_to_message_id=msg_id, disable_notification=True, timeout=50)
+            elif str(update.message.from_user.id) in registered_channels and username.lower() not in registered_channels:
+                bot.send_message(chat_id=GROUPCHATID ,text=f"You need to register @{username} channel in @registeringbot", reply_to_message_id=msg_id, disable_notification=True, timeout=50)
+            elif str(update.message.from_user.id) not in registered_channels and username.lower() in registered_channels:
+                bot.send_message(chat_id=GROUPCHATID ,text=f"You haven't registered this @{username} channel under your name in @registeringbot", reply_to_message_id=msg_id, disable_notification=True, timeout=50)
+            else: bot.send_message(chat_id=GROUPCHATID ,text=f"You haven't registered in @registeringbot", reply_to_message_id=msg_id, disable_notification=True, timeout=50)
 
-    elif message.count(",") != 1 or "@" not in message:
-        bot.send_message(chat_id=GROUPCHATID ,text="Format is not correct", reply_to_message_id=msg_id, disable_notification=True)
+        elif message.count(",") != 1 or "@" not in message:
+            bot.send_message(chat_id=GROUPCHATID ,text="Format is not correct", reply_to_message_id=msg_id, disable_notification=True)
+    else:
+        pass
 
 def list_maker(bot, update):
     # Google sheets for Storing the Chat ID of every new Telegram user who press start
@@ -318,11 +319,11 @@ def main():
     dp.add_handler(my_channels_handler)
     dp.add_handler(add_command_handler)
     dp.add_handler(conv_handler)
-    dp.add_handler(test_command_handler)
+    # dp.add_handler(test_command_handler)
     dp.add_error_handler(error) # log all errors
 
     # Job Queue
-    # job.run_daily(list_maker, time=timer('18:30:00'), days=(0,1,2,3,4,5,6))
+    job.run_daily(list_maker, time=timer('08:30:00'), days=(2))
 
     # Start the Bot
     updater.start_polling()
