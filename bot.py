@@ -24,8 +24,8 @@ class AddCommand(BaseFilter):
 
 addcommand = AddCommand()
 
-TOKEN = "1008094127:AAFiLvvFFeNCMUrgu90pY_Cl7NwqdMdBgNU" # os.environ.get('TOKEN', None)
-GROUPCHATID =-1455210348 # os.environ.get('GROUPCHATID', None)
+TOKEN = "977507022:AAHZBHnHoEgq3vzrIg0wcS4aO1AuUHCw6wM" # os.environ.get('TOKEN', None)
+GROUPCHATID =-1471226917 # os.environ.get('GROUPCHATID', None)
 
 # Enable logging
 logging.basicConfig(format='%(asctime)s - %(name)s - %(levelname)s - %(message)s',
